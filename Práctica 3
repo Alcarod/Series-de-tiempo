@@ -1,0 +1,9 @@
+#Cargar base precargada-------------------------------------------------------------
+
+data("AirPassengers")
+class(AirPassengers) #qué clase de datos es la base de datos.
+start(AirPassengers) #cuándo empieza la base de datos.
+end(AirPassengers) #cuándo acaba la base de datos.
+frequency(AirPassengers) #frecuencia de la serie en este caso son datos mensuales.
+summary(AirPassengers) #Resumen de la base de datos.
+plot(AirPassengers)#gráfico más sencillo de la serie de tiempo.
