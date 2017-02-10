@@ -1,0 +1,22 @@
+#descargar la base.
+
+temporal <- tempfile() #Nombrar archivo
+
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe/microdatos/enoe_15ymas/2016",temporal)#Descargar archivo
+
+
+    #http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/regulares/enoe/microdatos/enoe_15ymas/2016 , no es zip :(
+
+
+
+files = unzip(temporal, list=TRUE)$Name #Descomprimir y nombrar 
+
+unzip(temporal, files=files[grepl("dbf", files)]) 
+
+install.packages("foreign") #Comando para instalar paqueterias
+
+require (foreign) #Comando para llamar una paqueteria
+
+Baset <- data.frame(read.dbf("sdemt116.dbf")) #Tabla
+
+View (Baset)
