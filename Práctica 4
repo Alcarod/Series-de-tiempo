@@ -23,4 +23,52 @@ pceu<-data.frame(prof,cpib,employed,unemployed)
 pceu [1:12, ] #Muestra los primeros 12 renglones.
 pceu [49:60,] #Muestra los últimos 12 renglones.
 
+#4)Convertir los objetos en una serie de tiempo y determinar cuándo acaba.
 
+STprof<- ts(prof, frequency = 12, start = 2010)
+  end(STprof)
+STcpib<- ts(cpib, frequency = 12, start = 2010)
+  end(STcpib)
+STemployed<- ts(employed, frequency = 12, start = 2010)
+  end(STemployed)
+STunemployed<- ts(unemployed, frequency = 12, start = 2010)
+  end(STunemployed)
+
+#5)Graficar los profesionistas y ocupados en la misma imagen.
+  
+plot(cbind(STprof,STemployed))
+
+#6)Graficar pib y desocupados en la misma imagen.
+
+plot(cbind(STcpib,STunemployed))
+
+#7)Graficar todas juntas.
+
+plot(cbind(STprof,STemployed,STcpib,STunemployed))
+
+#8)Graficar ciertos vectores.
+
+plot.ts(pceu [,c(1,3)])
+
+#9)Declarar Serie de tiempo múltiple.
+
+pceusts <- ts.intersect(pceu)
+
+#10)Bajar datos del PIB tasa de crecimiento anual en México de 1980 a 2015
+#Crear 4 series de tiempo.
+#1980 a 1990
+#1991 a 2000
+#2001 a 2010
+#2011 a 2015
+#Graficar en una misma imagen la serie 2 y 3
+#Graficar en una misma imagen la serie 1 y 4
+
+PIB<-read.csv("C:\\Users\\salaD-20\\Downloads\\PIB.csv", header = TRUE)
+
+PIB80a90<- ts(PIB [1:10,],frequency = 1, start = 1980)
+PIB91a2000<- ts(PIB [11:20,],frequency = 1, start = 1991)
+PIB2001a2010<- ts(PIB [21:30,],frequency = 1, start = 2000)
+PIB2010a2015<- ts(PIB [31:35,],frequency = 1, start = 2010)
+
+plot(cbind(PIB91a2000,PIB2001a2010))
+plot(cbind(PIB80a90,PIB2010a2015))
