@@ -1,0 +1,26 @@
+#Descargar y leer base de datos en R ------------------------------------------------
+#1. Buscamos en INEGI.
+#2. Descargar la base de datos.
+#3. Ubicar la ruta de la base de datos en la computadora.
+#4. Importamos en R el archivo .csv
+#5. Reconocer el archivo como serie de tiempo.
+
+#Ejercicio---------------------------------------------------------------------------
+
+#1)Generar datos aleatorios.
+
+prof<-sample(5:8, 60, replace = TRUE)
+cpib<-sample(0:5,60, replace = TRUE)
+employed<-sample(40:60, 60, replace = TRUE)
+unemployed<-sample(3:8, 60, replace = TRUE)
+
+#2)Una vez generados los datos acer un data frame de de los 4 objetos.
+
+pceu<-data.frame(prof,cpib,employed,unemployed)
+
+#3)Mostrar en consola los primeros 12 y últimos datos.
+
+pceu [1:12, ] #Muestra los primeros 12 renglones.
+pceu [49:60,] #Muestra los últimos 12 renglones.
+
+
