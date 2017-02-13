@@ -1,0 +1,48 @@
+#siguiendo los datos de la práctica 4
+
+seriemultiple<-ts.intersect(STcpib,STprof,STemployed,STunemployed) #sERIE DE TIEMPO MÚLTIPLE
+
+plot(seriemultiple, main="serie de tiempo múltiple", xlab="años",
+     ylab="número de personas", col="ambar",type="overplotted", pch = 2)
+
+seriemultiple10.12<-window(seriemultiple,start=c(2010,1), end=c(2012,1))
+
+plot(seriemultiple10.12, main="Serie de tiempo múltiple", xlab="años", 
+     ylab="número de personas", col="gray")
+start(seriemultiple);end(seriemultiple)
+
+#Obtener 4 series de tiempo con mínimo 30 datos.
+#Las series de tiempo tienen qjue tener sustento para poder compararlas
+#Importarlas, declararlas series de tiempo, graficarlas juntas como serie de
+#tiempo.
+#Dividir la serie de tiempo en tres periodos con intervalos iguales y graficarlas
+#con formato.
+
+Econ<-read.csv("C:\\Users\\salaD-20\\Downloads\\bie.csv", header = TRUE)
+
+Deuda<- ts(Econ [,1], frequency = 12, start = 2013)
+Cetes<- ts(Econ [,2], frequency = 12, start = 2013)
+Bondes<- ts(Econ [,3], frequency = 12, start = 2013)
+Udibonos<- ts(Econ [,4], frequency = 12, start = 2013)
+
+plot(cbind(Deuda,Cetes,Bondes,Udibonos))
+
+Econmult<- ts.intersect(Deuda,Cetes,Bondes,Udibonos)
+
+plot(Econmult, main="Instrumentos de deuda interna", xlab="meses", 
+     ylab="instrumentos", col="gray")
+
+Econmult1<-window(Econmult,start=c(2013,1), end=c(2013,10))
+
+plot(Econmult1, main="Instrumentos de deuda interna 1", xlab="meses", 
+     ylab="instrumentos", col="gray")
+
+Econmult2<-window(Econmult,start=c(2013,11), end=c(2014,8))
+
+plot(Econmult2, main="Instrumentos de deuda interna 2", xlab="meses", 
+     ylab="instrumentos", col="gray")
+
+Econmult3<-window(Econmult,start=c(2014,9), end=c(2015,6))
+
+plot(Econmult3, main="Instrumentos de deuda interna 3", xlab="meses", 
+     ylab="instrumentos", col="gray")
