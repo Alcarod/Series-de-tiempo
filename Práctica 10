@@ -1,0 +1,38 @@
+#~Descomposición Loose---------------------------------------------------------
+#Se utiliza la función descompose para la descomposición clásica
+#Otro tipo de descomposición de la estacionariedad,
+#Tendencia y estacionariedad es la descomposición
+#Por Loose la cual esta basada en un algoritmo que permite
+#Descomponer las series de tiempo en 3 elementos: estacionariedad, 
+#tendencia y aleatoriedad
+#Una de las ventajas de esta descomposicióm es el calculo de la estacionariedad
+#que se obtienen valores de estacionariedad no constantes, en contraste con el 
+#método clasico de descomposicion
+
+#Descomposición clásica
+
+desocupacion <- read.csv("C:\\Users\\Sala-D19\\Downloads\\tarea2.csv")
+class (desocupacion) #Aparece o muestra que tipo de datos son (data.frame)
+
+des <- ts(desocupacion, frequency =4 , start=2005)
+class(des) #En ejemplo: st
+
+desco <- decompose(des)
+
+tend1 <- desco$trend #Tendencia de la desomposicion clasica
+
+plot(tend1, col="blue", main="Tendencia desocupación", ylab="Tasas"
+     
+     , xlab="Años")
+
+#Descomposición Tendencia, estacional por Loose
+
+desco2 <- stl(des, s.window="periodic", robust = T ) #seasonal tend loose
+
+#Usa el objeto time series, s.window="periodic", 
+#robust=T (da una mejor descomposición)
+#Las time series se tiene que modificar 
+
+dess <- ts(desocupacion[1:48,1] , frequency =4 , start=2005)
+
+names(desco2) #Nombres de las variables
