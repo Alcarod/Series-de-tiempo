@@ -1,0 +1,59 @@
+#Funciones.
+#For----------------------------------------------------------------------------
+u1<-(1:10)
+for(i in 1:10){
+  u1[i]<-u1[i]+2
+  print(u1[i])
+}
+
+#While--------------------------------------------------------------------------
+s<- 5
+while(s<6){
+  s<- s*2
+  print(s)
+}
+
+s<-1
+while(s<5){
+  s<- s+1
+  if(s==4)
+    break
+  print(s)
+}
+
+variable<-read.csv(file.choose())#te abre una ventana para elegir el archivo.
+length()<- ver cuántos datos tiene el vector()
+
+
+#Clase-----------------------------------------------------------------------
+serie<-read.csv(file.choose())
+tsdes<-ts(serie, frequency = 4,start = 2005)
+
+detsdes<- decompose(tsdes)
+
+detsdes$trend
+detsdes$seasonal
+
+plot(tsdes, col="blue", main = "tasa de desocupación trimestral", 
+     ylab = "tasas", xlab= "años")
+lines(detsdes$trend, col = "red", ylab = "tendencia")
+
+monthplot(detsdes$seasonal, main="IVec", ylab="ivec trimestral")
+
+etsdes<- decompose(tsdes, type = "multiplicative")
+
+#Tarea para el lunes
+#1) Encontrar una serie de tiempo con tendencia a la alza y la estacionalidad
+#también se incremente.
+#2) Aplicar el modelo multiplicativo.
+#3) Graficar tendencia.....
+
+#descomposición en modelo multiplicativo------------------------------------
+
+deso<-read.csv(choose.files(),header = T)
+
+desot<- ts(deso, frequency = 4, start = 2005)
+
+dectsd<- decompose(desot)# descomposición aditiva
+
+dectsdmul<- decompose(desot, type = "mult") # descomposición multiplicativa
