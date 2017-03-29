@@ -1,0 +1,40 @@
+PIB<- read.csv(choose.files())
+PIBt<-ts(PIB)
+
+acf(PIB)#correlograma
+
+#tarea buscar una serie de tiempo de méxico en donde con el correlograma determinen que tiene ruido blanco otra 
+#donde se muyestre el correlograma exponga que la st tiene caminata aleatoria.
+
+#Modelos lineales para pronosticar.
+
+#Método ingenuo.
+
+#Son la apllicación de pronósticos lineales, cono el ingenuo, promedio, ingenuo estacional y el de deriva 
+#el pronóstico ingenuo está basado en la última observación que arroja la serie de tiempo. Es decir este pronós-
+#tico asume que la observación más importante es la última.
+#función en r
+#naive(serie,h=num pronósticos)
+
+install.packages("forecast")
+require(forecast)
+naive(PIB, h=4)
+
+#Método promedio 
+
+#este método le da el mismo peso a todos los datos u observaciones es decir, se asume con este método que todas
+#las observaciones tienen las misma importancia por lo que el pronóstico es un promedio de todas las observacio-
+#nes 
+#función para r meanf (serie,h= número de pronósticos)
+
+meanf(PIBt,h=4)
+
+plot(meanf (PIBt, h=4))
+
+#Método ingenuo estacional.
+
+#Este método se utiliza en series de tiempo con alta estacionalidad, este pronóstico consiste en darle el mayor
+#peso o la mayor ponderación al dato del mismo periodo en el año anterior, por ejemplo, trimestre 2 del 2005 es
+#igual al trimestre 2 del 2006
+#la función es
+snaive(PIB, h=4) #la frecuencia de la serie de tiempo debe estar bien declarada
