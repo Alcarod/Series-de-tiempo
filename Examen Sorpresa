@@ -1,0 +1,72 @@
+#Examen Sorpresa..............................................................
+  
+TCPO<-read.csv(choose.files())
+TCPOts<-ts(TCPO [,2], frequency = 261, start = 2016)
+
+require(forecast)
+
+mod1<-ses(TCPOts, alpha = 0.2, initial = "simple")
+mod2<-ses(TCPOts, alpha = 0.4, initial = "simple")
+mod3<-ses(TCPOts, alpha = 0.6, initial = "simple")
+mod4<-ses(TCPOts, alpha = 0.8, initial = "simple")
+
+x11()
+plot(TCPOts, ylab ="p.cierre",main = "Televisa CPO", type = "o")
+lines(mod1$fitted, col=2,type = "o")
+lines(mod2$fitted, col=3,type = "o")
+lines(mod3$fitted, col=4,type = "o")
+lines(mod4$fitted, col=5,type = "o")
+legend("topleft",lty=1,col = c(1,2,3,4,5),
+       c("datos",expression(alpha ==0.2),expression(alpha ==0.4),expression(alpha == 0.6),expression(
+         alpha==.8)), pch = 64)
+
+#De acuerdo al gráfico el mejor ajuste es el del apha de .8
+
+require(fpp)
+
+aj1<-TCPOts-mod1$fitted #residuos
+aj1
+
+#RMSE y MAE de los modelos
+
+#modelo 1
+evam1<-accuracy(mod1)
+RMSEm1<-evam1[,2]
+RMSEm1#RMSE modelo 1
+
+MAEm1<-evam1[,3]
+MAEm1#Mae modelo 1
+
+#modelo 2
+evam2<-accuracy(mod2)
+RMSEm2<-evam2[,2]
+RMSEm2#RMSE modelo 2
+
+MAEm2<-evam2[,3]
+MAEm2#Mae modelo 2
+
+#modelo 3
+evam3<-accuracy(mod3)
+RMSEm3<-evam3[,2]
+RMSEm3#RMSE modelo 3
+
+MAEm3<-evam3[,3]
+MAEm3#Mae modelo 3
+
+#modelo 4
+evam4<-accuracy(mod4)
+RMSEm4<-evam4[,2]
+RMSEm4#RMSE modelo 4
+
+MAEm4<-evam4[,3]
+MAEm4#Mae modelo 4
+
+comp<-matrix(c(MAEm1,MAEm2,MAEm3,MAEm4,RMSEm1,RMSEm2,RMSEm3,RMSEm4,0.2,0.4,0.6,0.8),nrow = 4,ncol = 3)
+comp
+
+min<-min(comp[,1])
+for(i in 1:4){
+if(min==comp[i,1]){
+  print("El mejor alpha es ")
+  print(comp[i,3])}
+}
