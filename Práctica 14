@@ -1,0 +1,61 @@
+#Ejercicio Holt----------------------------------------------------------------
+#En dos series de tiempo con tendencia creciente y decreciente respectivamente
+#Cortar las series en el 80% de sus datos y graficar los métodos Holt junto
+#con los datos reales.
+
+#bases de datos
+
+b1<-c(5.5,5.78,6.2, 6.3, 6.85,7.01,7.55,8.01,8.8,8.9,8.75,8.25,9.2,9.35,9.56,9.16,10.12,11.05,11.55,11.95)
+b2<-c(11.95,11.55,11.05,10.12,9.16,9.56,9.35,9.2,8.25,8.75,8.9,8.8,8.01,7.55,7.01,6.85,6.3,6.2,5.78,5.5)
+
+#series de tiempo.
+
+st1<-ts(b1, frequency = 1, start = 1997)
+st2<-ts(b2, frequency = 1, start = 1997)
+
+require(fpp)
+
+p1<-window(st1,start=1997,end=2012)
+p2<-window(st1,start=2013,end=2016)
+
+H1<-holt(p1, alpha = 0.8, beta = 0.2, initial="simple", h=5)
+
+H2<-holt(p1, alpha = 0.8, beta = 0.2, initial="simple", exponential=TRUE, h=5)
+
+H3<-holt(p1, damped = TRUE, h=5)
+
+H4<-holt(p1, exponential = T, damped = T, h=5)
+
+11()
+plot(st1, ylab ="Dato",main = "Pronósticos Holt", type = "o")
+lines(p2, col=2,type = "o")
+lines(H1$mean, col=3,type = "o")
+lines(H2$mean, col=4,type = "o")
+lines(H3$mean, col=5,type = "o")
+lines(H4$mean, col=6,type = "o")
+legend("topleft",lty=1,col = c(1,2,3,4,5,6),
+       c("datos antes","datos después","Holt lineal","Holt exponencial","H. aditivo amortiguado","H. mult. amortiguado", pch = 64)
+       
+
+p3<-window(st2,start=1997,end=2012)
+p4<-window(st2,start=2013,end=2016)
+
+H5<-holt(p4, alpha = 0.8, beta = 0.2, initial="simple", h=5)
+
+H6<-holt(p4, alpha = 0.8, beta = 0.2, initial="simple", exponential=TRUE, h=5)
+
+H7<-holt(p4, damped = TRUE, h=5)
+
+H8<-holt(p4, exponential = T, damped = T, h=5)
+
+11()
+plot(st2, ylab ="Dato",main = "Pronósticos Holt", type = "o")
+lines(p4, col=2,type = "o")
+lines(H5$mean, col=3,type = "o")
+lines(H6$mean, col=4,type = "o")
+lines(H7$mean, col=5,type = "o")
+lines(H8$mean, col=6,type = "o")
+legend("topleft",lty=1,col = c(1,2,3,4,5,6),
+       c("datos antes","datos después","Holt lineal","Holt exponencial","H. aditivo amortiguado","H. mult. amortiguado", pch = 64)
+       
+       
