@@ -1,0 +1,94 @@
+#------------------------------------------------------------------------------
+
+BDcemex<-read.csv(choose.files(),header=F)
+BDbimbo<-read.csv(choose.files(),header=F)
+
+tsc<-ts(BDcemex,start=2016, frequency = 252)
+tsb<-ts(BDbimbo,start=2016, frequency = 252)
+
+#revisar que nuestra serie sea estacionaria.
+#Se aplica la prueba de raíz unitaria a través de la función adf.test y esperamos
+#que el p-value sea menor a  .05
+require(fpp)
+require(foreign)
+adf.test(tsb)
+dtsb<-diff(tsb) #hacer diferenciación para hacerla estacionaria.
+
+adf.test(dtsb) # puesto que el p-value es menor a .05 no hay que hacer otra 
+               # diferenciación.
+               # por lo tanto el valor p del arima será 1 puesto que solo ocupa
+               # mos una diferenciación.
+
+acf(dtsb) #el promedio movil hay que verlo en el correlograma, el número de 
+          # franjas que sobrepasen las bandas serán el parámetro q en este caso
+          # es 2
+
+pacf(dtsb)#La correlación parcial nos dará el parámetro p, de igual manera que 
+          # en el parámetro anterior el número de franjas que sobrepasen será
+          # el valor de p, en este caso de 4 
+
+#Así se propone un modelo ARIMA(4,1,2)
+
+modb<-Arima(tsb, order = c(4,1,2))
+modb
+modb1<-Arima(tsb,order = c(5,1,2)) #entre los dos modelos habría que revisar
+modb1                              # el valor de AICc y el menor valor de AICc
+                                   #sería el mejor modelo con el criterio de 
+                                   #AIKAKE
+#así el mejor modelo es modb
+
+modres<-residuals(modb)
+Box.test(modres,lag=12,type="Ljung-Box")
+pronósticos<-forecast(modb,h=12)
+plot(forecast(modb,h=12),include=18)
+
+auto.arima(tsb)
+
+modb<-Arima(tsb, order = c(2,1,2))
+modb
+modres<-residuals(modb)
+Box.test(modres,lag=12,type="Ljung-Box")
+pronósticos<-forecast(modb,h=12)
+plot(forecast(modb,h=12),include=18)
+
+##### Cemex
+
+#revisar que nuestra serie sea estacionaria.
+#Se aplica la prueba de raíz unitaria a través de la función adf.test y esperamos
+#que el p-value sea menor a  .05
+require(fpp)
+require(foreign)
+adf.test(tsc)
+dtsc<-diff(tsc) #hacer diferenciación para hacerla estacionaria.
+
+adf.test(dtsc) # puesto que el p-value es menor a .05 no hay que hacer otra 
+# diferenciación.
+# por lo tanto el valor p del arima será 1 puesto que solo ocupa
+# mos una diferenciación.
+
+acf(dtsc) #el promedio movil hay que verlo en el correlograma, el número de 
+# franjas que sobrepasen las bandas serán el parámetro q en este caso
+# es 2
+
+pacf(dtsc)#La correlación parcial nos dará el parámetro p, de igual manera que 
+# en el parámetro anterior el número de franjas que sobrepasen será
+# el valor de p, en este caso de 2 
+
+#Así se propone un modelo ARIMA(2,1,2)
+
+modc<-Arima(tsc, order = c(2,1,2))
+modc
+
+modresc<-residuals(modc)
+Box.test(modresc,lag=12,type="Ljung-Box")
+pronósticos<-forecast(modc,h=12)
+plot(forecast(modc,h=12),include=18)
+
+auto.arima(tsc)
+
+modc1<-Arima(tsc, order = c(0,1,0))
+modc1
+modres<-residuals(modc1)
+Box.test(modres,lag=12,type="Ljung-Box")
+pronósticos<-forecast(modc1,h=12)
+plot(forecast(modc1,h=12),include=18)
