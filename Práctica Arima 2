@@ -1,0 +1,35 @@
+AM<-read.csv(choose.files(),header = T)
+AMT<-ts(AM[,4],frequency = 252,start = 2016)
+
+
+#expresar función de autorregresivo (AR)
+
+mod<-Arima(AMT,order=c(1,0,0))
+mod
+#yt=c+phi1(yt-1)+phi2(yt-2)+...+phip(yt-p)+et
+#Yt=12.6252+.9928(yt-1)+et en esta caso phi1=.9928
+mod2<-Arima(AMT,order=c(2,0,0))
+mod2
+
+#expresar función de promedios móviles (MA)
+
+mod3<-Arima(AMT,order=c(0,0,1))
+mod3
+#Yt=c+et+teta1(et-1)+teta2(et-2)+...+tetaq(et-q)
+#yt=12.1715+.9280(et-1)
+
+mod4<-Arima(AMT,order = c(0,0,2))
+mod4
+#yt=12.177+1.3450(et-1)+.8389(et-2)
+
+#expresar función Arima
+
+#Y't=c+phi1(y't-1)+phi2(y't-2)+...+phip(y't-p)+et+teta1(et-1)+teta2(et-2)+...
+#+tetaq(et-q)+et
+
+#para un modelo arima con p=2, d=3 y q=2
+
+mod5<-Arima(AMT,order=c(2,3,2))
+mod5
+
+#Y't=.1971(y't-1)-.1704(y't-2)-1.992(et-1)+.9924(et-2)
