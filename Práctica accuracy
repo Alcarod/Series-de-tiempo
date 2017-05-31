@@ -1,0 +1,78 @@
+require(fpp)
+#Carga de serie de tiempo
+
+tdes<- ts(desocupación, frequency = 4, start=2005)
+
+#Vector de valores
+des<- as.numeric(ts(data.frame(desocupación), frequency = 4, start=2005))
+
+#Método de suavizado exponencial simple
+
+mod1<-ses(tdes, alpha=.1, initial="simple", h=8)
+
+mod2<-ses(tdes, alpha=.3, initial="simple", h=8)
+
+mod3<-ses(tdes, alpha=.9, initial="simple", h=8)
+
+mod4<-ses(tdes, alpha=.95, initial="simple", h=8)
+
+#Graficamos los ajustes de los modelos
+
+plot(mod1, ylab = "Año", main = "Desocupación", type="o")
+lines(fitted(mod1), col=2, type="o")
+lines(fitted(mod2), col=3, type="o")
+lines(fitted(mod3), col=4, type="o")
+lines(fitted(mod4), col=5, type="o")
+
+#Obtencion del MAE Y RMSE
+#Modelo 1
+#Método manual
+
+res1<- des- mod1$fitted #datos reales menos los ajustados
+res1 #residuos del modelo 1
+
+mean(abs(res1))# MAE, media de los residuos
+
+sqrt(mean(res1^2))#RMSE
+
+#Método función accuracy
+accm1<-accuracy(mod1)
+accm1
+
+#MODELO 2
+
+res2<- des- mod2$fitted 
+res2
+
+mean(abs(res2))#MAE
+
+sqrt(mean(res2^2))#RMSE
+
+accm2<-accuracy(mod2)
+accm2
+
+#MODELO 3
+
+res3<- des- mod3$fitted 
+res3
+
+mean(abs(res3))#MAE
+
+sqrt(mean(res3^2))#RMSE
+
+accm3<-accuracy(mod3)
+accm3
+
+#MODELO 4
+
+res4<- des- mod3$fitted 
+res4
+
+mean(abs(res4))#MAE
+
+sqrt(mean(res4^2))#RMSE
+
+accm4<-accuracy(mod4)
+accm4
+
+#el modelo que mejor ajusta es el modelo 3 de forma gráfca y con MAE y RMSE
