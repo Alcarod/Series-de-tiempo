@@ -1,0 +1,41 @@
+#Práctica análisis de residuales
+
+#análisis de residuales--------------------------------------------------------
+#Lo que se ve a analizar de los residuales es que cumplan con las propieades de 
+#residuales que consise en:
+#1)Los residuales no estén correlacionados
+#2)Tienen media cero
+#3)Tienen varianza constante
+#4)Están normalmente distribuídos.
+
+#Para esto en r se tienen que obtener los residuales de cada uno de los 4 modelos
+#con la finalidad de analizarlos y conocer su comportamiento.
+
+#Para lo anterior primero vamos a graficar nuestros datos con los valores
+#justados para después extraer los residuales de cada modelo y cmenzar los
+#análisis correspondientes.
+
+x11()
+plot(mod1, ylab = "",xlab = "",main = "")
+  lines(mod1$fitted, col = 2)
+  lines(mod2$fitted, col = 3)
+  lines(mod3$fitted, col = 4)
+  lines(mod4$fitted, col = 5)
+  
+res1<- residuals(mod1)
+res2<- residuals(mod2)
+res3<- residuals(mod3)
+res4<- residuals(mod4)
+
+plot(res1, ylab = "residuales", xlab = "")
+plot(res2, ylab = "residuales", xlab = "")
+plot(res3, ylab = "residuales", xlab = "")
+plot(res4, ylab = "residuales", xlab = "")
+
+hist(res1, nclass = "FD", main = "histograma residuales", col = rainbow(10))
+hist(res2, nclass = "FD", main = "histograma residuales", col = rainbow(10))
+hist(res3, nclass = "FD", main = "histograma residuales", col = rainbow(10))
+hist(res4, nclass = "FD", main = "histograma residuales", col = rainbow(10))
+
+#Prueba de autocorrelaciones a los residuales
+#para analizar las autocorr
